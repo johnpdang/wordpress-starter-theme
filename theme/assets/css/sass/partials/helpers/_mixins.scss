@@ -22,3 +22,9 @@
     -moz-transition:$elems $speed $ease;
     transition:$elems $speed $ease;
 }
+
+@mixin object-fit($size:cover, $position:center){
+    object-fit:$size;
+    object-position:$position;
+    font-family: "object-fit:" + $size + "; object-position:" + $position + ";";
+}
