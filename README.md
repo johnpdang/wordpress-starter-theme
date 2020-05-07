@@ -1,29 +1,13 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+This README includes instructions for getting the starter theme up and running for a new project.
 
-### What is this repository for? ###
+### Theme Setup ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* 1. Search for: `%theme-name-dashed%` and replace with: `theme-name`.
+* 2. Search for: `%theme_name_underscored%` and replace with: `theme_name`.
+* 3. Search for: `%Theme_name_sentence_case%` and replace with: `Theme Name`.
 
-### How do I get set up? ###
+### Plugins ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+* A collection of plugins that are commonly used have been included in the repo to help get up and running quickly
