@@ -1,0 +1,47 @@
+$theme_url:'~/wp-content/themes/%theme-name-dashed%/assets/';
+$theme_img_url:'~/wp-content/themes/%theme-name-dashed%/assets/images/';
+$theme_img_url_menus:$theme_img_url + 'menus/';
+
+/* ===============
+   Breakpoints
+   =============== */
+
+$screen-xs: 374px;
+$screen-sm: 768px;
+$screen-md: 991px;
+$screen-md-lg:1024px;
+$screen-lg: 1367px;
+$screen-xl: 1440px;
+
+$button_margin:67px;
+
+$width_container_hero:1263px;
+$width_container_sml:950px;
+$width_container_med:1079px;
+$width_container_nav_sml: 1135px;
+$width_container:1350px;
+$width_container_large:1440px;
+$width_container_wide:1750px;
+$width_container_wide:calc(100% - 17vw);
+$width_container_wide_m:calc(100% - 40px);
+$width_container_xwide:calc(100% - 10vw);
+
+/* ===============
+  Brand Colors
+   =============== */
+
+
+/* ===============
+  Font Families
+   =============== */
+
+$primary-font: 'arial';
+
+/* ===============
+  Font Weights
+   =============== */
+
+$fw-light: 300;
+$fw-regular: 500;
+$fw-semibold: 700;
+$fw-bold: 800;

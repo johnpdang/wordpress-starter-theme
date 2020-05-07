@@ -1,0 +1,24 @@
+// Mixin for min-width media query, accepts a width parameter
+@mixin mq-min($width) {
+    @media screen and (min-width: $width) {
+        @content;
+    }
+}
+
+// Mixin for max-width media query, accepts a width parameter
+@mixin mq-max($width) {
+    @media screen and (max-width: $width) {
+        @content;
+    }
+}
+
+@mixin fsize($size, $line:1) {
+    font-size:sp-px-to-rem($size);
+    line-height:$line;
+}
+
+@mixin td_transition($elems:all, $speed:.3s, $ease:ease-in-out) {
+    -webkit-transition:$elems $speed $ease;
+    -moz-transition:$elems $speed $ease;
+    transition:$elems $speed $ease;
+}

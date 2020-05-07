@@ -1,0 +1,194 @@
+/*
+// available class hooks
+// last number is rage
+// __0 - 4 == 0-4, or up to 4.
+
+.draw-right__0 -4
+.draw-left__0 -4
+.fade-scale-right__0 -10
+fade-scale-up__0 -10
+.fade-scale-left__0 -10
+html.js .from-bottom__0 -10
+html.js .in-viewport .fade-in__0 -5
+html.js .is-inview.fade-inview__0 -5
+
+available animations
+    fade-in
+    scale-up
+    scale-down
+    from-top
+    from-bottom
+    from-bottom-sml
+    from-left
+    from-right
+    draw-right
+    fade-scale-right
+    draw-out-left
+    draw-out-right
+*/
+
+html {
+    [class*="from-bottom__"],
+    [class*="fade-in__"],
+    [class*="fade-scale-right__"],
+    [class*="fade-scale-left__"],
+    [class*="fade-scale-up__"],
+    [class*="fade-inview__"],
+    [class*="from-right__"],
+    [class*="from-left__"],
+    [class*="anim-slide-down__"],
+    .fade-in,
+    .main-navigation .from-right {
+        opacity:0;
+    }
+}
+
+$theme_base_delay:.3s;
+$theme_base_inerval:.25;
+
+$fade_scale_right_base:.1s;
+$fade_scale_right_interval:.15;
+@for $i from 0 through 10 {
+    .not-first.active .fade-scale-right__#{$i},
+    .is-inview.fade-scale-right__#{$i} {
+        overflow:visible;
+        -webkit-animation: fade-scale-right $theme_speed_def cubic-bezier($theme_bezier_a) $fade_scale_right_base forwards;
+    	        animation: fade-scale-right $theme_speed_def cubic-bezier($theme_bezier_a) $fade_scale_right_base forwards;
+    }
+    $fade_scale_right_base:$fade_scale_right_base + $fade_scale_right_interval;
+}
+
+$fade_scale_up_base:.1s;
+$fade_scale_up_interval:.25;
+@for $i from 0 through 10 {
+    .fade-scale-up__#{$i} {
+        &.is-inview,
+         .in-viewport & {
+            overflow:visible;
+            -webkit-animation: fade-scale-up $theme_speed_def cubic-bezier($theme_bezier_a) $fade_scale_up_base forwards;
+        	        animation: fade-scale-up $theme_speed_def cubic-bezier($theme_bezier_a) $fade_scale_up_base forwards;
+        }
+        $fade_scale_up_base:$fade_scale_up_base + $fade_scale_up_interval;
+    }
+}
+
+$fade_scale_left_base:.1s;
+$fade_scale_left_interval:.15;
+@for $i from 0 through 10 {
+    .fade-scale-left__#{$i} {
+        .not-first.active &,
+        &.is-inview {
+            overflow:visible;
+            -webkit-animation: fade-scale-left $theme_speed_def cubic-bezier($theme_bezier_a) $fade_scale_left_base forwards;
+        	        animation: fade-scale-left $theme_speed_def cubic-bezier($theme_bezier_a) $fade_scale_left_base forwards;
+        }
+        $fade_scale_left_base:$fade_scale_left_base + $fade_scale_left_interval;
+    }
+}
+
+$from_bottom_base:$theme_base_delay;
+$from_bottom_interval:$theme_base_inerval;
+@for $i from 0 through 10 {
+     .in-viewport .from-bottom__#{$i},
+     .is-inview.from-bottom__#{$i} {
+            -webkit-animation: from-bottom $theme_speed_def cubic-bezier($theme_bezier_a) $from_bottom_base forwards;
+        	        animation: from-bottom $theme_speed_def cubic-bezier($theme_bezier_a) $from_bottom_base forwards;
+    }
+    $from_bottom_base:$from_bottom_base + $from_bottom_interval;
+}
+
+.anim-scale-down {
+    -webkit-transform: scale(1.45, 1.45);
+            transform: scale(1.45, 1.45);
+
+    .in-viewport & {
+        // -webkit-animation: scale-down $theme_base_speed*4.5 cubic-bezier($theme_bezier_a) forwards;
+    	//         animation: scale-down $theme_base_speed*4.5 cubic-bezier($theme_bezier_a) forwards;
+        -webkit-animation: scale-down $theme_speed_def cubic-bezier($theme_bezier_a) forwards;
+                animation: scale-down $theme_speed_def cubic-bezier($theme_bezier_a) forwards;
+                animation-delay:.1s;
+    }
+}
+
+.fade-in {
+    -webkit-animation: fade-in $theme_speed_def cubic-bezier($theme_bezier_a) forwards;
+    animation: fade-in $theme_speed_def cubic-bezier($theme_bezier_a) forwards;
+}
+
+$fade_in_base:$theme_base_delay;
+$fade_in_interval:$theme_base_inerval;
+@for $i from 0 through 9 {
+     .is-inview.fade-in__#{$i},
+     .in-viewport .fade-in__#{$i} {
+        -webkit-animation: fade-in $theme_speed_def cubic-bezier($theme_bezier_a) forwards;
+        animation: fade-in $theme_speed_def cubic-bezier($theme_bezier_a) forwards;
+        animation-delay:$fade_in_base;
+    }
+    $fade_in_base:$fade_in_base + $fade_in_interval;
+}
+
+$fade_in_base:$theme_base_delay;
+$fade_in_interval:$theme_base_inerval;
+@for $i from 0 through 5 {
+     .in-viewport .fade-inview__#{$i},
+     .is-inview.fade-inview__#{$i} {
+         -webkit-animation: fade-in $theme_speed_def cubic-bezier($theme_bezier_a) forwards;
+         animation: fade-in $theme_speed_def cubic-bezier($theme_bezier_a) forwards;
+        animation-delay:$fade_in_base;
+    }
+    $fade_in_base:$fade_in_base + $fade_in_interval;
+}
+
+.anim-slide-down,
+[class*="anim-slide-down__"] {
+    -webkit-transform:translateY(-150%);
+    transform:translateY(-150%);
+}
+.anim-slide-down.is-inview,
+.in-viewport .anim-slide-down {
+    -webkit-animation: from-top $theme_speed_def cubic-bezier($theme_bezier_a) forwards;
+    animation: from-top $theme_speed_def cubic-bezier($theme_bezier_a) forwards;
+    animation-delay:.1s;
+}
+$anim-slide-down_base:.1s;
+$anim-slide-down_interval:.15;
+@for $i from 0 through 10 {
+    .anim-slide-down__#{$i} {
+        .in-viewport &,
+        &.is-inview {
+            overflow:visible;
+            -webkit-animation: from-top $theme_speed_def cubic-bezier($theme_bezier_a) $anim-slide-down_base forwards;
+        	        animation: from-top $theme_speed_def cubic-bezier($theme_bezier_a) $anim-slide-down_base forwards;
+        }
+        $anim-slide-down_base:$anim-slide-down_base + $fade_scale_left_interval;
+    }
+}
+
+
+.anim-slide-up {
+    -webkit-transform:translateY(-150%);
+    transform:translateY(-150%);
+    &.is-inview {
+        -webkit-animation: from-bottom $theme_speed_def cubic-bezier($theme_bezier_a) forwards;
+        animation: from-bottom $theme_speed_def cubic-bezier($theme_bezier_a) forwards;
+        animation-delay:.1s;
+    }
+}
+
+.anim-slide-up-slow {
+    -webkit-transform:translateY(50%);
+    transform:translateY(50%);
+    &.is-inview {
+        -webkit-animation: from-bottom-sml $theme_speed_def cubic-bezier($theme_bezier_b_alt) forwards;
+        animation: from-bottom-sml $theme_speed_def cubic-bezier($theme_bezier_b_alt) forwards;
+        animation-delay:.1s;
+    }
+}
+
+.anim-scale-bg {
+    @include td_transition();
+    background-size:150% auto !important;
+    &.is-inview {
+        background-size:110% auto !important;
+    }
+}

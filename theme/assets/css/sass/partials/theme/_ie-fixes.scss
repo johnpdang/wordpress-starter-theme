@@ -1,0 +1,20 @@
+// IE 10 & 11
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    html {
+        [class*="from-bottom__"],
+        [class*="fade-in__"],
+        [class*="fade-scale-right__"],
+        [class*="fade-scale-left__"],
+        [class*="fade-scale-up__"],
+        [class*="fade-inview__"],
+        [class*="from-right__"],
+        [class*="from-left__"],
+        [class*="anim-slide-down__"],
+        [class*="draw-left__"],
+        [class*="draw-right__"],
+        .fade-in,
+        .main-navigation .from-right {
+            opacity:1;
+        }
+    }
+}

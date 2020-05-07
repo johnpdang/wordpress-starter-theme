@@ -1,0 +1,51 @@
+.modal {
+    display:none;
+    @include td_transition();
+
+    &.active {
+        display: block;
+        position: fixed;
+        z-index: 20;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background:rgba(0,0,0,.85);
+    }
+
+    .modal__wrapper {
+        &__video {
+            width:100%;
+            height:100%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            .modal-inner-wrapper {
+                position: relative;
+                max-width:1652px;
+                height:auto;
+                width:calc(92% - 46px);
+                @include mq-min($screen-sm) {
+                    width:calc(92% - 92px);
+                }
+            }
+        }
+    }
+}
+
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    z-index:1;
+    embed,
+    iframe,
+    object {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%
+    }
+}
