@@ -1,22 +1,10 @@
 import "babel-polyfill";
-import locomotiveScroll from 'locomotive-scroll';
-
+// import locomotiveScroll from 'locomotive-scroll';
+import {debouncer} from './components/utils';
 import slider from './components/slider';
 import modal from './components/modal';
 
 function id(v){ return document.getElementById(v); }
-
-// used for window resize/scroll functions to reduce function calls
-function debouncer(func, timeout) {
-    var timeoutID, timeout = timeout || 20;
-    return function () {
-        var scope = this, args = arguments;
-        clearTimeout(timeoutID);
-        timeoutID = setTimeout(function () {
-            func.apply(scope, Array.prototype.slice.call(args));
-        }, timeout);
-    };
-}
 
 /*
  YOUTUBE VIDEO
@@ -104,6 +92,29 @@ $(document).ready(() => {
     };
     equalHeights();
 
+    var waitForFinalEvent = (function () {
+      var timers = {};
+      return function (callback, ms, uniqueId) {
+        if (!uniqueId) {
+          uniqueId = "Don't call this twice without a uniqueId";
+        }
+        if (timers[uniqueId]) {
+          clearTimeout (timers[uniqueId]);
+        }
+        timers[uniqueId] = setTimeout(callback, ms);
+      };
+    })();
+
+    $(window).resize(function () {
+        waitForFinalEvent(function(){
+          equalHeights();
+        }, 500);
+    });
+
+    $(window).resize(debouncer(function (e) {
+        equalHeights();
+    }, 10));
+
     // Smooth Scrolling links
     $('body').on('click', '.scroll-link', function(e){
       e.preventDefault();
@@ -116,10 +127,6 @@ $(document).ready(() => {
 
     // Resize iFrames
     //$('iframe').iFrameResize( { log:false, resizeFrom:'parent', bodyMargin:'20px 0', heightCalculationMethod: 'lowestElement' });
-
-   	$( window ).resize( debouncer( function ( e ) {
-   		equalHeights();
-   	} ) );
 
     // Adjust screen position when accordions open
     $('.accordion__trigger').click(function(e){
@@ -165,21 +172,76 @@ $(document).ready(() => {
 
 $(window).on('load', function() {
 
-    const mainScroll = new locomotiveScroll({
-        el: document.getElementById('page'),
-    });
-    mainScroll.on('call', (func) => {});
+    // Check if Element is on screen
+	$.fn.isOnScreen = function(){
+		if($(this).length) {
 
-    // Update locomotiveScroll when UI elements change scroll positions
+		// Percentage of screen height to offset the trigger. e.g. 2 equals 50% or mid-screen
+		var offsetTriggerAmount = 6;
+
+		var top = $(this).offset().top;
+		var bottom = top + $(this).outerHeight();
+		var windowTop = $(window).scrollTop();
+		var windowBottom = windowTop + $(window).height();
+		var triggerTop = windowTop + ($(window).height() / offsetTriggerAmount);
+		var triggerBottom = windowBottom - ($(window).height() / offsetTriggerAmount);
+
+
+		return ((top < triggerBottom && bottom > triggerBottom) || (top < triggerTop && bottom > triggerTop) || (top > windowTop && bottom < windowBottom));
+		}
+		else {
+		return false;
+		}
+	};
+
+    // since locomotive scroll can be a bit unreliable for animating in elements, this function works as a backup.
+    function is_inview_scrollcheck(){
+        $('[data-scroll]').each(function(){
+            if($(this).isOnScreen() && !$(this).hasClass('in-inview')){
+                $(this).addClass('is-inview');
+            }
+        });
+    }
+
+    // Update is_inview_scrollcheck when UI elements change scroll positions
     const ui_elements = document.querySelectorAll('.accordion__trigger, .tab-links a, .nav-tabs a');
     for(var i = 0; i < ui_elements.length; i++) {
         let el = ui_elements[i];
         el.addEventListener('click', function(e){
+            el.blur();
             // Set timeout to ensure elements position has updated
             setTimeout(function(){
-                mainScroll.update();
-            },500);
+                is_inview_scrollcheck();
+            },75);
+            setTimeout(function(){
+                is_inview_scrollcheck();
+            },150);
+            setTimeout(function(){
+                is_inview_scrollcheck();
+            },300);
         });
     };
+
+    // Preload images
+    const preloadImages = () => {
+        return new Promise((resolve, reject) => {
+            var imgLoad = imagesLoaded(document.querySelectorAll('img'), {
+                background: true,
+            }, resolve);
+        });
+    };
+    preloadImages().then(() => {
+        $('body').removeClass('loading').trigger('tdAnimate');
+
+        // trigger scroll helper for animations.
+        // wait for curtain to close then run it.
+        setTimeout(function(){
+            is_inview_scrollcheck();
+        }, 400);
+
+        $(window).on('scroll', debouncer(function(){
+            is_inview_scrollcheck();
+        }, 10));
+    });
 
 });
