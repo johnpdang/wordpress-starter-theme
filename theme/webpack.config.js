@@ -18,8 +18,7 @@ module.exports = {
         }),
         new BrowserSyncPlugin({
             // set proxy to your MAMP local dev env
-            proxy: 'http://brooklynbrew:8888',
-            // proxy: 'http://bbsite.local/',
+            proxy: 'http://dev.local:8888',
             files: [{
                 // Tell browserSync which files to watch for
                 match: [
